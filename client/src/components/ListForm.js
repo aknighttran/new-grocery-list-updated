@@ -1,4 +1,6 @@
 import React from 'react'
+import { Form } from 'semantic-ui-react'
+
 
 class ListForm extends React.Component {
   defaultValues = { name: ''}
@@ -25,16 +27,22 @@ class ListForm extends React.Component {
   render() {
     const { name } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input 
-          name="name"
-          placeholder="Name of List"
-          value={name}
-          onChange={this.handleChange}
-          requried
-        />
-        <button>Submit</button>
-      </form>
+      <Form onSubmit={this.handleSubmit}>
+        <ul>
+          <i className="..."></i>
+          {' '}
+        </ul>
+        <Form.Group widths='equal'>
+          <Form.Input 
+            name="name"
+            placeholder="Name of List"
+            value={name}
+            onChange={this.handleChange}
+            requried="true"
+          />
+        </Form.Group>
+        <Form.Button type='submit' color='black'>Submit</Form.Button>
+      </Form>
     )
   }
   

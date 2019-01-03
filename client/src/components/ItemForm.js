@@ -6,7 +6,7 @@ class ItemForm extends React.Component {
 
   componentDidMount() {
     if (this.props.id)
-      this.setState({ name: this.props.name, price: this.props.price, })
+      this.setState({ ...this.props })
   }
 
   handleChange = (e) => {

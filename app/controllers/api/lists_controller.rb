@@ -15,7 +15,7 @@ class Api::ListsController < ApplicationController
     if list.save
       render json: list
     else
-      render json: list.errors, status:422
+      render json: list.errors, status: 422
     end
   end
 

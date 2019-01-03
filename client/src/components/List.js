@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import ListForm from './ListForm'
 import ItemForm from './ItemForm'
-import { Header, Button, Icon } from 'semantic-ui-react'
+import { Header, Button, Icon, } from 'semantic-ui-react'
 
 class List extends React.Component {
   state = { list: {}, items: [], edit: false, showForm: false }
@@ -12,7 +12,7 @@ class List extends React.Component {
     axios.get(`/api/lists/${id}`)
       .then( res => {
         this.setState({ list: res.data})
-      })
+      });
     axios.get(`/api/lists/${id}/items`)
       .then( res => {
         this.setState({ items: res.data, })
@@ -42,9 +42,8 @@ class List extends React.Component {
     const remove = window.confirm("Are you sure you want to delete this List?")
     if (remove)
     axios.delete(`/api/lists/${id}`)
-      .then ( res => this.props.history.push("/lists"))
-      .catch( err => {
-        console.log(err)
+    .then(res => {
+      this.props.history.push("/lists");
       })
   }
 
@@ -73,16 +72,11 @@ class List extends React.Component {
     })
   }
 
-  getId = () => {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  };
-
-  addItem = (postData) => {
-    const { items, } = this.state;
-    const item = { id: this.getId(), ...postData, };
-    this.setState({ items: [item, ...items], });
+  addItem = (item) => {
+    axios.post(`/api/lists/${this.props.match.params.id}/items`, { item })
+      .then(res => {
+        this.setState({ items: [res.data, ...this.state.items], showForm: false})
+      })
   }
 
   itemForm = () => {
@@ -107,9 +101,12 @@ class List extends React.Component {
         </Button>
       <br />
       <br />
+      <br />
         <div>
-        <h4 style={{'fontSize': '30px'}}>Items</h4>
-        <Button onClick={this.toggleForm} size='tiny'>{ showForm ? 'Hide' : 'Add Items'}</Button>
+        <Header as='h3' dividing style={{'fontSize': '25px'}}>
+          Items <Button onClick={this.toggleForm} size='mini' >{ showForm ? 'Hide' : 'Add Items'}</Button>
+        </Header>
+        {/* <Button onClick={this.toggleForm} size='mini'>{ showForm ? 'Hide' : 'Add Items'}</Button> */}
         {showForm ? this.itemForm() : this.renderItems()}
         </div>
       </div>
