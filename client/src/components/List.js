@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import ListForm from './ListForm'
 import ItemForm from './ItemForm'
+import Item from './Item'
 import { Header, Button, Icon, } from 'semantic-ui-react'
 
 class List extends React.Component {
@@ -61,15 +62,37 @@ class List extends React.Component {
   }
 
   renderItems = () => {
-    return this.state.items.map( i => {
-      return (
-        <ul key={i.id}>
-          <li>
-            {i.name}- ${i.price}
-          </li>
-        </ul>
-      )
-    })
+    return this.state.items.map( i => (
+      <Item key={i.id} { ...i } remove={this.removeItem} update={this.updateItem} />
+    ))
+  }
+
+  updateItem = (id) => {
+    const lId = this.props.match.params.id;
+    axios.put(`/api/lists/${lId}/items/${id}`)
+      .then( res => {
+        const items = this.state.items.map( t => {
+          if (t.id === id)
+            return res.data;
+          return t;
+        });
+        this.setState({ items });
+      })
+  }
+
+  removeItem = (id) => {
+    const remove = window.confirm("Are you sure you want to delete this item?");
+    const lId = this.props.match.params.id;
+    if (remove)
+      axios.delete(`/api/lists/${lId}/items/${id}`)
+        .then( res => {
+          const items = this.state.items.filter( i => {
+            if (i.id !== id) 
+              return i;  
+            return null;
+          });
+          this.setState({ items, });
+        })
   }
 
   addItem = (item) => {

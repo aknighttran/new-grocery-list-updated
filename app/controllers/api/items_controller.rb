@@ -19,8 +19,8 @@ class Api::ItemsController < ApplicationController
     end
   end
 
-  def update
-    if @item.update(item_params)
+  def update 
+    if @item.update(complete: !@item.complete)
       render json: @item
     else 
       render json: @item.errors, status: 422
@@ -41,7 +41,7 @@ class Api::ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:name, :price)
+      params.require(:item).permit(:name, :price, :complete)
     end
 
 end

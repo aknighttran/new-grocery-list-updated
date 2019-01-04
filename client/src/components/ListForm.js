@@ -41,7 +41,11 @@ class ListForm extends React.Component {
             requried="true"
           />
         </Form.Group>
-        <Form.Button type='submit' color='black'>Submit</Form.Button>
+        <Form.Button type='submit' color='black' size='mini'>Submit</Form.Button>
+        <ul>
+          <i className="..."></i>
+          {' '}
+        </ul>
       </Form>
     )
   }

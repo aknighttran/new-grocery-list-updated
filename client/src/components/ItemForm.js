@@ -2,7 +2,7 @@ import React from 'react'
 import { Form } from 'semantic-ui-react'
 
 class ItemForm extends React.Component {
-  state = { name: '', price: '' };
+  state = { name: '', price: '', complete: false };
 
   componentDidMount() {
     if (this.props.id)
@@ -48,7 +48,7 @@ class ItemForm extends React.Component {
             onChange={this.handleChange}        
             />
         </Form.Group>
-        <Form.Button type='submit' color='black'>Submit</Form.Button>
+        <Form.Button type='submit' color='black' size='mini'>Submit</Form.Button>
       </Form>
       </div>
     )
