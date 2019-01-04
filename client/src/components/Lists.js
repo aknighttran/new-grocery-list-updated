@@ -37,7 +37,7 @@ class Lists extends React.Component {
       return (
         <ul key={l.id}>
           <li>
-            <Link to={`/lists/${l.id}`}>{l.name}</Link>
+            <Link style={{'fontSize': '20px'}} to={`/lists/${l.id}`}>{l.name}</Link>
           </li>
         </ul>
       )
